@@ -319,7 +319,10 @@ button { font: inherit; }
 .site-footer li { margin-bottom: 10px; }
 .site-footer a { text-decoration: none; transition: color 0.3s; }
 .site-footer a:hover { color: var(--gold); }
-.footer__bottom { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--on-dark-faint); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 0.8125rem; }
+.footer__bottom { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--on-dark-faint); display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px; font-size: 0.8125rem; }
+.footer__credit { display: inline-flex; opacity: 0.8; transition: opacity 0.3s var(--ease), transform 0.4s var(--ease); }
+.footer__credit:hover { opacity: 1; transform: translateY(-2px); }
+.footer__credit img { height: 40px; width: auto; }
 
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
