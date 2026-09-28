@@ -44,7 +44,13 @@
   if (window.WMRiver) {
     $$('[data-river]').forEach(function (c) {
       var final = c.classList.contains('river--final');
-      rivers.set(c, new window.WMRiver(c, {
+      var mavi = c.dataset.river === 'mavi';
+      rivers.set(c, new window.WMRiver(c, mavi ? {
+        host: c.closest('section, main') || c.parentElement,
+        lines: 22, amplitude: 0.9, glints: 7, light: true, alphaScale: 1.6,
+        c1: [174, 196, 202], c2: [217, 168, 160],          // Sereno no meio, Rosé nas pontas
+        glintCore: [255, 255, 255], glintMid: [217, 168, 160]
+      } : {
         host: c.closest('section, main') || c.parentElement,
         lines: final ? 20 : 26,
         amplitude: final ? 0.8 : 1,
@@ -625,7 +631,10 @@
     gsap.set(brand, { autoAlpha: 0, y: 20, letterSpacing: '0.2em' });
     gsap.set(tagSplit.lines, { yPercent: 105 });
     gsap.set(links, { autoAlpha: 0, y: 40, rotationX: -25, transformPerspective: 800 });
+    var extras = $$('.bio__extra'), line = $('.bio__line path');
     gsap.set(foot, { autoAlpha: 0 });
+    gsap.set(extras, { autoAlpha: 0, y: 30 });
+    if (line) gsap.set(line, { drawSVG: '0%' });
     gsap.set(glow, { autoAlpha: 0, scale: 0.7 });
     gsap.set($$('.bio__inner > *'), { visibility: 'visible' });
     if (river) river.intensity = 0;
@@ -637,7 +646,10 @@
       .to(brand, { autoAlpha: 1, y: 0, letterSpacing: '0em', duration: 1.2 }, 0.6)
       .to(tagSplit.lines, { yPercent: 0, duration: 1, stagger: 0.08 }, 0.8)
       .to(links, { autoAlpha: 1, y: 0, rotationX: 0, duration: 1.1, stagger: 0.08 }, 1)
+      .to(extras, { autoAlpha: 1, y: 0, duration: 1.1 }, 1.4)
       .to(foot, { autoAlpha: 1, duration: 1 }, 1.6);
+    // linha contínua da marca da Mavi: se desenha atrás do conteúdo
+    if (line) tl.to(line, { drawSVG: '100%', duration: 2.8, ease: 'power2.inOut' }, 0.15);
     if (river) tl.to(river, { intensity: 1, duration: 3, ease: 'power2.out' }, 0.4);
     links.forEach(function (l) { spotlight(l); magnetic(l, 0.08); });
   }

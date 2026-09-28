@@ -6,6 +6,7 @@ Site estático (HTML, CSS e JavaScript puro) da WM Psicologia, de Willian Santos
 
 - `index.html`: landing page com 9 seções
 - `links/index.html`: página de links (biolink), acessível em `/links/`
+- `links/willian/` e `links/mavi/`: páginas de links individuais de cada profissional
 - `404.html`: página de erro, ativada pelo `.htaccess`
 
 ## Estrutura
@@ -29,7 +30,7 @@ Os caminhos usam `/` a partir da raiz do domínio, então o site precisa ficar n
 
 ## Editar contatos
 
-Os links de WhatsApp aparecem em `index.html` e `links/index.html`:
+Os links de WhatsApp aparecem em `index.html`, `links/index.html` e nas páginas individuais em `links/willian/` e `links/mavi/`:
 
 - Willian: `https://wa.me/5544998460313`
 - Maria Vitória: `https://wa.me/5544991788720`

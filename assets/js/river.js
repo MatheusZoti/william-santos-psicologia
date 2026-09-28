@@ -9,20 +9,19 @@
   var ROSE = [217, 168, 160];
   var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  function makeGlint() {
+  function makeGlint(core, mid) {
     var s = 64, c = document.createElement('canvas');
     c.width = c.height = s;
     var g = c.getContext('2d');
     var grad = g.createRadialGradient(s / 2, s / 2, 0, s / 2, s / 2, s / 2);
-    grad.addColorStop(0, 'rgba(250, 239, 228, 1)');
-    grad.addColorStop(0.18, 'rgba(238, 186, 115, 0.85)');
-    grad.addColorStop(0.5, 'rgba(209, 163, 100, 0.18)');
-    grad.addColorStop(1, 'rgba(209, 163, 100, 0)');
+    grad.addColorStop(0, 'rgba(' + core + ', 1)');
+    grad.addColorStop(0.18, 'rgba(' + mid + ', 0.85)');
+    grad.addColorStop(0.5, 'rgba(' + mid + ', 0.18)');
+    grad.addColorStop(1, 'rgba(' + mid + ', 0)');
     g.fillStyle = grad;
     g.fillRect(0, 0, s, s);
     return c;
   }
-  var GLINT = null;
 
   function River(canvas, opts) {
     opts = opts || {};
@@ -39,7 +38,12 @@
     this.running = false;
     this.last = 0;
     this.intensity = reduce ? 1 : 0; // o GSAP pode subir de 0 a 1 na entrada
-    if (!GLINT) GLINT = makeGlint();
+    // cores: c1 no meio das linhas, c2 nas pontas; light = fundo claro
+    this.c1 = opts.c1 || GOLD;
+    this.c2 = opts.c2 || ROSE;
+    this.light = !!opts.light;
+    this.alphaScale = opts.alphaScale || 1;
+    this.glint = makeGlint(opts.glintCore || [250, 239, 228], opts.glintMid || [238, 186, 115]);
     this.glints = [];
     for (var i = 0; i < this.glintCount; i++) this.glints.push(this.newGlint(true));
     this.bind();
@@ -100,11 +104,11 @@
     for (var i = 0; i < this.count; i++) {
       var d = i / (this.count - 1);
       var grad = this.ctx.createLinearGradient(0, 0, this.w, 0);
-      var a = 0.06 + 0.34 * Math.pow(d, 1.3);
-      grad.addColorStop(0, 'rgba(' + ROSE + ',' + (a * 0.35) + ')');
-      grad.addColorStop(0.35, 'rgba(' + GOLD + ',' + a + ')');
-      grad.addColorStop(0.7, 'rgba(' + GOLD + ',' + (a * 0.9) + ')');
-      grad.addColorStop(1, 'rgba(' + ROSE + ',' + (a * 0.3) + ')');
+      var a = (0.06 + 0.34 * Math.pow(d, 1.3)) * this.alphaScale;
+      grad.addColorStop(0, 'rgba(' + this.c2 + ',' + (a * 0.35) + ')');
+      grad.addColorStop(0.35, 'rgba(' + this.c1 + ',' + a + ')');
+      grad.addColorStop(0.7, 'rgba(' + this.c1 + ',' + (a * 0.9) + ')');
+      grad.addColorStop(1, 'rgba(' + this.c2 + ',' + (a * 0.3) + ')');
       this.rows.push({
         d: d,
         y: this.h * (0.1 + 0.86 * Math.pow(d, 1.55)),
@@ -152,7 +156,7 @@
     }
 
     // brilhos que descem o rio
-    ctx.globalCompositeOperation = 'lighter';
+    ctx.globalCompositeOperation = this.light ? 'source-over' : 'lighter';
     for (var g = 0; g < this.glints.length; g++) {
       var gl = this.glints[g];
       if (!reduce) gl.x += gl.v * dt * this.speed;
@@ -163,7 +167,7 @@
       var edge = Math.min(1, gl.x * 6, (1.08 - gl.x) * 6);
       ctx.globalAlpha = Math.max(0, tw * edge * this.intensity * (0.35 + 0.65 * r.d));
       var s = gl.size * (0.6 + 0.4 * r.d);
-      ctx.drawImage(GLINT, gx - s / 2, gy - s / 2, s, s);
+      ctx.drawImage(this.glint, gx - s / 2, gy - s / 2, s, s);
     }
     ctx.globalAlpha = 1;
     ctx.globalCompositeOperation = 'source-over';
