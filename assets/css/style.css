@@ -173,7 +173,7 @@ button { font: inherit; }
 .hero__grid { display: grid; grid-template-columns: 1.08fr 0.92fr; gap: clamp(40px, 6vw, 96px); align-items: center; }
 .hero h1 { max-width: 13ch; }
 .hero__sub { margin: 28px 0 40px; max-width: 34ch; color: var(--on-dark-muted); }
-.hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 16px 28px; }
+.hero__actions { display: flex; flex-wrap: wrap; align-items: center; gap: 36px 56px; }
 .hero__actions .text-link { color: var(--on-dark); }
 .hero__media { position: relative; justify-self: end; width: min(100%, 470px); }
 .arch { position: relative; border-radius: 999px 999px var(--radius-lg) var(--radius-lg); overflow: hidden; aspect-ratio: 770 / 940; background: var(--ink-800); }
