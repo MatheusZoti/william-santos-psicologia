@@ -250,7 +250,8 @@ button { font: inherit; }
 .pro__facts dd { margin: 0; }
 .plans { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 10px; }
 .plans li { font-size: 0.8125rem; padding: 4px 11px; border-radius: var(--pill); background: rgba(255, 255, 255, 0.55); border: 1px solid rgba(67, 57, 58, 0.12); }
-.pro .btn { align-self: flex-start; margin-top: 6px; }
+.pro .btn { align-self: stretch; width: 100%; margin-top: 6px; }
+@media (hover: hover) { .pro .btn--aura:hover .aura { transform: scale(1.015); } }
 .pro--mavi .btn--rose { background: var(--tinta); color: var(--sand); }
 .pro--mavi .btn--rose:hover { background: #564a4b; box-shadow: 0 10px 30px -14px rgba(67, 57, 58, 0.6); }
 
