@@ -224,6 +224,7 @@
     if (hero) initHome();
     if ($('.bio')) initLinks();
     if ($('.nf')) init404();
+    if ($('.soon')) initSoon();
 
     // Tudo que ainda não tem animação própria entra ao rolar
     var rest = $$('.reveal').filter(function (el) { return !claimed.has(el) && !el.closest('[data-claimed]'); });
@@ -694,5 +695,28 @@
       .to(split.words, { yPercent: 0, duration: 1.2, stagger: 0.05 }, 0.8);
     if (river) tl.to(river, { intensity: 1, duration: 3, ease: 'power2.out' }, 0.3);
     $$('.nf .btn').forEach(function (b) { magnetic(b, 0.25); });
+  }
+
+  /* ===============================================================
+     Em breve (página inicial provisória)
+     =============================================================== */
+  function initSoon() {
+    var top = $('.soon__top'), foot = $('.soon__foot'), bridge = $('.bridge--soon');
+    var h1 = $('.soon h1'), canvas = $('.soon .river'), river = rivers.get(canvas);
+    var bits = $$('.soon__main > *').filter(function (el) { return el !== bridge && el !== h1; });
+    var split = SplitText.create(h1, { type: 'chars', mask: 'chars' });
+    gsap.set(split.chars, { yPercent: 120 });
+    gsap.set(bits, { autoAlpha: 0, y: 22 });
+    gsap.set([top, foot], { autoAlpha: 0 });
+    gsap.set([top, foot, bridge, h1].concat(bits), { visibility: 'visible' });
+    if (river) river.intensity = 0;
+    var tl = gsap.timeline({ delay: 0.2 });
+    tl.fromTo(top, { autoAlpha: 0, y: -12 }, { autoAlpha: 1, y: 0, duration: 1 }, 0)
+      .add(drawBridge(bridge), 0.1)
+      .to(split.chars, { yPercent: 0, duration: 1.3, stagger: 0.06, ease: 'power4.out' }, 0.9)
+      .to(bits, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.12 }, 1.2)
+      .to(foot, { autoAlpha: 1, duration: 1 }, 1.8);
+    if (river) tl.to(river, { intensity: 1, duration: 3.2, ease: 'power2.out' }, 0.4);
+    $$('.soon__contact .btn').forEach(function (b) { magnetic(b, 0.2); });
   }
 })();
