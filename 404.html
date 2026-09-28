@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Página não encontrada | WM Psicologia</title>
+  <meta name="robots" content="noindex">
+  <meta name="theme-color" content="#0a272d">
+  <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
+  <link rel="preload" href="/assets/fonts/aleiakids.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="/assets/css/style.css">
+  <style>
+    body { background: var(--ink); color: var(--on-dark); padding-bottom: 0; }
+    .nf { position: relative; min-height: 100dvh; display: flex; align-items: center; overflow: hidden; padding: 120px 0 80px; }
+    .nf__code { font-family: var(--serif); font-size: clamp(6rem, 18vw, 13rem); line-height: .9; color: transparent; -webkit-text-stroke: 1px rgba(209,163,100,.6); margin: 0 0 24px; }
+    .nf h1 { max-width: 16ch; }
+    .nf p { margin: 24px 0 40px; max-width: 42ch; color: var(--on-dark-muted); }
+    .nf__actions { display: flex; flex-wrap: wrap; gap: 14px; }
+    .nf .rings { right: 6%; top: 50%; transform: translateY(-50%); }
+    @media (max-width: 640px) { .nf .rings { display: none; } .nf__actions .btn { width: 100%; } }
+  </style>
+</head>
+<body>
+  <header class="site-header is-solid">
+    <div class="container">
+      <a class="brand" href="/" aria-label="WM Psicologia, página inicial">
+        <span class="brand__wm">WM</span>
+        <span class="brand__sub">Psicologia</span>
+      </a>
+    </div>
+  </header>
+  <main class="nf">
+    <div class="glow" aria-hidden="true"></div>
+    <div class="rings" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="container">
+      <p class="nf__code" aria-hidden="true">404</p>
+      <h1 class="h-xl">Este caminho não leva a lugar nenhum.</h1>
+      <p>A página que você procurou não existe ou mudou de endereço. Mas o espaço para conversar continua aqui.</p>
+      <div class="nf__actions">
+        <a class="btn btn--gold" href="/">Voltar ao início</a>
+        <a class="btn btn--ghost-dark" href="/#agendar">Agendar uma conversa</a>
+      </div>
+    </div>
+  </main>
+</body>
+</html>
