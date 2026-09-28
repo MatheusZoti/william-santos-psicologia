@@ -273,7 +273,7 @@
     var rings = $$('.hero .rings span'), glow = $('.hero .glow'), canvas = $('.hero .river');
     var river = rivers.get(canvas);
     var headerBits = [$('.site-header .brand')].concat($$('.nav > *'));
-    var bar = $('.mobile-bar');
+    var bar = null;
     claim([eyebrow, h1, sub, actions, media]);
 
     var eyeSplit = SplitText.create(eyebrow, { type: 'chars' });

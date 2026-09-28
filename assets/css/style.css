@@ -321,9 +321,6 @@ button { font: inherit; }
 .site-footer a:hover { color: var(--gold); }
 .footer__bottom { margin-top: 56px; padding-top: 24px; border-top: 1px solid var(--on-dark-faint); display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; font-size: 0.8125rem; }
 
-/* ---------- Mobile sticky WhatsApp bar ---------- */
-.mobile-bar { display: none; }
-
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
@@ -362,8 +359,7 @@ button { font: inherit; }
 
 @media (max-width: 640px) {
   body { font-size: 1rem; }
-  .site-footer { padding-bottom: calc(116px + env(safe-area-inset-bottom)); }
-  .nav .btn { display: none; }
+  .nav .btn { min-height: 38px; padding: 0 14px; font-size: 0.8125rem; }
   .hero__actions .btn { width: 100%; }
   .when__grid { grid-template-columns: 1fr; }
   .when__grid li { padding: 20px 0 24px; }
@@ -373,15 +369,6 @@ button { font: inherit; }
   .faq__answer { padding-right: 0; }
   .choice { padding: 26px; }
   .footer__grid { grid-template-columns: 1fr; }
-
-  .mobile-bar {
-    display: grid; grid-template-columns: 1fr 1fr; gap: 8px;
-    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
-    padding: 10px 12px calc(10px + env(safe-area-inset-bottom));
-    background: rgba(7, 30, 35, 0.94); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px);
-    box-shadow: 0 -1px 0 var(--on-dark-faint);
-  }
-  .mobile-bar .btn { min-height: 48px; padding: 0 12px; font-size: 0.9375rem; gap: 8px; }
 }
 
 
@@ -553,14 +540,13 @@ button { font: inherit; }
 .aura i:nth-child(2) { background: var(--aura-b2); width: 44%; animation-name: aura-b; animation-duration: 11s; animation-delay: -3s; }
 .aura i:nth-child(3) { background: var(--aura-b3); width: 40%; opacity: 0.7; animation-name: aura-c; animation-duration: 13s; animation-delay: -6s; }
 
-/* hover só em quem tem mouse; na barra fixa do celular o botão não cresce */
+/* hover só em quem tem mouse */
 @media (hover: hover) {
   .btn--aura:hover .aura { transform: scale(1.045); }
   .btn--aura:hover .aura i { opacity: 1; }
   .btn--aura:hover .aura i:nth-child(1) { animation-duration: 5s; }
 }
 .btn--aura:active .aura { transform: scale(0.98); }
-.mobile-bar .btn--aura:hover .aura, .mobile-bar .btn--aura:active .aura { transform: none; }
 .btn--aura:focus-visible { outline-offset: 8px; }
 
 @keyframes aura-a {
@@ -584,10 +570,6 @@ button { font: inherit; }
   0% { transform: translateX(-7%); }
   100% { transform: translateX(7%); }
 }
-
-/* barra fixa do celular: halo mais contido */
-.mobile-bar .btn--aura { padding: 0 12px; }
-.mobile-bar .aura i { filter: blur(9px); top: -4%; height: 108%; }
 
 @media (prefers-reduced-motion: reduce) {
   .aura::after, .aura i { animation: none !important; }
