@@ -176,6 +176,8 @@
 
   function magnetic(el, strength) {
     if (!fine || !el) return;
+    // o GSAP cuida do transform; a transição CSS de transform brigaria com ele e daria trancos
+    el.style.transitionProperty = 'background-color, color, border-color, box-shadow';
     var xTo = gsap.quickTo(el, 'x', { duration: 0.6, ease: 'power3' });
     var yTo = gsap.quickTo(el, 'y', { duration: 0.6, ease: 'power3' });
     el.addEventListener('pointermove', function (e) {
@@ -185,6 +187,22 @@
     });
     el.addEventListener('pointerleave', function () {
       gsap.to(el, { x: 0, y: 0, duration: 1, ease: 'elastic.out(1, 0.35)' });
+    });
+  }
+
+  // botão aura: no hover as bolhas aceleram aos poucos (mudar animation-duration no CSS faz elas saltarem)
+  function auraHover(btn) {
+    if (!fine || !btn || !btn.getAnimations) return;
+    var blobs = btn.querySelectorAll('.aura i');
+    var rate = { v: 1 };
+    function apply() {
+      blobs.forEach(function (b) { b.getAnimations().forEach(function (a) { a.playbackRate = rate.v; }); });
+    }
+    btn.addEventListener('pointerenter', function () {
+      gsap.to(rate, { v: 1.8, duration: 1.2, ease: 'sine.inOut', overwrite: true, onUpdate: apply });
+    });
+    btn.addEventListener('pointerleave', function () {
+      gsap.to(rate, { v: 1, duration: 1.6, ease: 'sine.inOut', overwrite: true, onUpdate: apply });
     });
   }
 
@@ -271,6 +289,7 @@
 
     $$('.hero__actions .btn, .when__close .btn, .steps__cta .btn, .choice .btn, .pro .btn, .place__actions .btn, .nav .btn')
       .forEach(function (b) { magnetic(b, 0.25); });
+    $$('.btn--aura').forEach(auraHover);
   }
 
   function buildHero() {

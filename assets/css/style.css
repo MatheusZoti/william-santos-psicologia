@@ -514,7 +514,7 @@ button { font: inherit; }
 .btn.btn--aura::after { display: none; }
 .aura {
   position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
-  transition: transform 0.6s var(--ease);
+  transition: transform 0.9s var(--ease);
 }
 /* corpo */
 .aura::before {
@@ -538,7 +538,7 @@ button { font: inherit; }
   position: absolute; z-index: -1; left: 24%; top: -12%; width: 52%; height: 124%;
   border-radius: 50%; background: var(--aura-b1); filter: blur(12px); opacity: 0.85;
   animation: aura-a 9s ease-in-out infinite; will-change: transform;
-  transition: opacity 0.5s var(--ease);
+  transition: opacity 0.9s var(--ease);
 }
 .aura i:nth-child(2) { background: var(--aura-b2); width: 44%; animation-name: aura-b; animation-duration: 11s; animation-delay: -3s; }
 .aura i:nth-child(3) { background: var(--aura-b3); width: 40%; opacity: 0.7; animation-name: aura-c; animation-duration: 13s; animation-delay: -6s; }
@@ -547,7 +547,7 @@ button { font: inherit; }
 @media (hover: hover) {
   .btn--aura:hover .aura { transform: scale(1.045); }
   .btn--aura:hover .aura i { opacity: 1; }
-  .btn--aura:hover .aura i:nth-child(1) { animation-duration: 5s; }
+  /* a aceleração das bolhas no hover é feita no main.js (playbackRate), de forma gradual */
 }
 .btn--aura:active .aura { transform: scale(0.98); }
 .btn--aura:focus-visible { outline-offset: 8px; }
