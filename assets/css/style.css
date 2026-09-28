@@ -347,8 +347,7 @@ button { font: inherit; }
   .pro, .pro--mavi { grid-template-columns: 1fr; }
   .pro--mavi .pro__photo { order: 0; }
   .pro__photo { min-height: 0; aspect-ratio: 1 / 1; }
-  .pro--will .pro__photo img { object-position: 50% 26%; }
-  .pro--mavi .pro__photo img { object-position: 50% 18%; }
+  .pro .pro__photo img { object-position: 50% 0%; }
   .steps { grid-template-columns: 1fr; gap: 40px; }
   .steps__line { top: 0; bottom: 0; left: 34px; right: auto; width: 1px; height: auto; }
   .steps__fill { background: linear-gradient(180deg, var(--gold), var(--rose)); transform-origin: top; }

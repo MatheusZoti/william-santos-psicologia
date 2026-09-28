@@ -455,7 +455,7 @@
       var wide = window.matchMedia('(min-width: 901px)').matches;
       var photoFrom = !wide ? 'inset(0% 0% 100% 0%)' : (card.classList.contains('pro--mavi') ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)');
       gsap.set(photo, { clipPath: photoFrom });
-      gsap.set(img, { scale: 1.45 });
+      gsap.set(img, { scale: 1.45, transformOrigin: wide ? '50% 40%' : '50% 0%' });
       gsap.set(bits, { autoAlpha: 0, y: 30 });
       gsap.set(chips, { autoAlpha: 0, scale: 0.6 });
       gsap.set(symbol, { autoAlpha: 0, rotate: -40, scale: 0.4 });
@@ -463,13 +463,14 @@
 
       gsap.timeline({ delay: i * 0.12, scrollTrigger: { trigger: card, start: 'top 82%', once: true } })
         .to(photo, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'wmInOut' }, 0)
-        .to(img, { scale: 1.12, duration: 2.2 }, 0)
+        .to(img, { scale: wide ? 1.12 : 1, duration: 2.2 }, 0)
         .to($('.pro__body', card), { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'wmInOut' }, wide ? 0.25 : 0.55)
         .to(bits, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.07 }, 0.8)
         .to(symbol, { autoAlpha: 0.95, rotate: 0, scale: 1, duration: 1.4, ease: 'back.out(1.8)' }, 0.9)
         .to(chips, { autoAlpha: 1, scale: 1, duration: 0.6, ease: 'back.out(2.2)', stagger: 0.035 }, 1.2);
 
-      gsap.fromTo(img, { yPercent: -5 }, {
+      // no celular a foto fica ancorada no topo, sem parallax, para não cortar a cabeça
+      if (wide) gsap.fromTo(img, { yPercent: -5 }, {
         yPercent: 5, ease: 'none',
         scrollTrigger: { trigger: card, start: 'top bottom', end: 'bottom top', scrub: true }
       });
