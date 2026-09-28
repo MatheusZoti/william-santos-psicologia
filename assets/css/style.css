@@ -466,7 +466,7 @@ button { font: inherit; }
 
 /* ---------- Convite final: ponte e spotlight ---------- */
 .bridge--final { width: 128px; height: auto; margin: 0 auto 36px; }
-.choice { position: relative; overflow: hidden; }
+.choice { position: relative; }
 .choice::before {
   content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
   background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), rgba(209, 163, 100, 0.18), transparent 65%);
@@ -495,4 +495,102 @@ button { font: inherit; }
 }
 @media (max-width: 900px) {
   .river { height: 38%; }
+}
+
+
+/* =========================================================
+   Botão aura (agendamento)
+   Corpo em pílula com bordas desfocadas, degradê interno e
+   bolhas de luz que orbitam devagar formando um halo.
+   ========================================================= */
+.aura--gold {
+  --aura-edge: #d1a364; --aura-mid: #eeba73; --aura-core: #f5dabf;
+  --aura-top: #faefe4; --aura-bottom: #d9a8a0;
+  --aura-b1: #d1a364; --aura-b2: #eeba73; --aura-b3: #d9a8a0;
+  --aura-glow: rgba(209, 163, 100, 0.55);
+}
+.aura--rose {
+  --aura-edge: #d9a8a0; --aura-mid: #e6c0b8; --aura-core: #f4e2dc;
+  --aura-top: #faefe4; --aura-bottom: #aec4ca;
+  --aura-b1: #d9a8a0; --aura-b2: #aec4ca; --aura-b3: #e6c0b8;
+  --aura-glow: rgba(217, 168, 160, 0.55);
+}
+.btn.btn--aura, .btn.btn--aura:hover {
+  background: transparent; color: var(--ink); box-shadow: none;
+  overflow: visible; font-weight: 600; padding: 0 30px;
+  text-shadow: 0 1px 0 rgba(255, 250, 240, 0.35);
+}
+.btn.btn--aura::after { display: none; }
+.aura {
+  position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+  transition: transform 0.6s var(--ease);
+}
+/* corpo */
+.aura::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit;
+  background: linear-gradient(90deg, var(--aura-edge) 0%, var(--aura-mid) 20%, var(--aura-core) 50%, var(--aura-mid) 80%, var(--aura-edge) 100%);
+  box-shadow: 0 0 22px 3px var(--aura-glow);
+  filter: blur(2.5px);
+}
+/* luz interna: claro no topo, tom frio embaixo */
+.aura::after {
+  content: ""; position: absolute; inset: 4% 8%; border-radius: inherit;
+  background:
+    radial-gradient(50% 62% at 46% 16%, var(--aura-top) 0%, transparent 72%),
+    radial-gradient(38% 60% at 56% 100%, var(--aura-bottom) 0%, transparent 72%);
+  filter: blur(3px);
+  animation: aura-sheen 7s ease-in-out infinite alternate;
+  will-change: transform;
+}
+/* bolhas do halo */
+.aura i {
+  position: absolute; z-index: -1; left: 24%; top: -12%; width: 52%; height: 124%;
+  border-radius: 50%; background: var(--aura-b1); filter: blur(12px); opacity: 0.85;
+  animation: aura-a 9s ease-in-out infinite; will-change: transform;
+  transition: opacity 0.5s var(--ease);
+}
+.aura i:nth-child(2) { background: var(--aura-b2); width: 44%; animation-name: aura-b; animation-duration: 11s; animation-delay: -3s; }
+.aura i:nth-child(3) { background: var(--aura-b3); width: 40%; opacity: 0.7; animation-name: aura-c; animation-duration: 13s; animation-delay: -6s; }
+
+.btn--aura:hover .aura { transform: scale(1.045); }
+.btn--aura:hover .aura i { opacity: 1; }
+.btn--aura:hover .aura i:nth-child(1) { animation-duration: 5s; }
+.btn--aura:active .aura { transform: scale(0.98); }
+.btn--aura:focus-visible { outline-offset: 8px; }
+
+@keyframes aura-a {
+  0%, 100% { transform: translate(-50%, -12%) scale(1); }
+  25% { transform: translate(34%, -18%) scale(1.1); }
+  50% { transform: translate(56%, 8%) scale(0.92); }
+  75% { transform: translate(-22%, 16%) scale(1.06); }
+}
+@keyframes aura-b {
+  0%, 100% { transform: translate(52%, 12%) scale(1); }
+  30% { transform: translate(-8%, 18%) scale(1.12); }
+  60% { transform: translate(-60%, -8%) scale(0.95); }
+  80% { transform: translate(12%, -17%) scale(1.08); }
+}
+@keyframes aura-c {
+  0%, 100% { transform: translate(0%, -18%) scale(0.9); }
+  35% { transform: translate(-62%, 10%) scale(1.08); }
+  70% { transform: translate(60%, 14%) scale(1); }
+}
+@keyframes aura-sheen {
+  0% { transform: translateX(-7%); }
+  100% { transform: translateX(7%); }
+}
+
+/* barra fixa do celular: halo mais contido */
+.mobile-bar .btn--aura { padding: 0 12px; }
+.mobile-bar .aura i { filter: blur(9px); top: -4%; height: 108%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .aura::after, .aura i { animation: none !important; }
+}
+
+/* sobre o card claro da Mavi o rosé precisa de mais corpo para se destacar */
+.pro--mavi .aura--rose {
+  --aura-edge: #c98b82; --aura-mid: #d9a49c; --aura-core: #f1d8d1;
+  --aura-b1: #c98b82; --aura-b3: #d9a49c;
+  --aura-glow: rgba(170, 100, 92, 0.42);
 }
