@@ -349,6 +349,9 @@
       start: 0, end: 'max',
       onUpdate: function (self) {
         gsap.set(bar, { scaleX: self.progress });
+        // some ao rolar para baixo, volta ao rolar para cima (sempre visível bem no topo)
+        var y = self.scroll();
+        header.classList.toggle('is-hidden', y > 80 && self.direction === 1);
       }
     });
   }
