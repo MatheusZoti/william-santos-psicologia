@@ -154,7 +154,7 @@ button { font: inherit; }
 
 /* ---------- Header ---------- */
 .site-header {
-  position: fixed; inset: 0 0 auto 0; z-index: 50; height: calc(var(--header-h) + env(safe-area-inset-top, 0px)); padding-top: env(safe-area-inset-top, 0px);
+  position: fixed; inset: 0 0 auto 0; z-index: 50; height: var(--header-h);
   display: flex; align-items: center; color: var(--on-dark);
   transition: background-color 0.4s var(--ease), box-shadow 0.4s var(--ease);
 }
