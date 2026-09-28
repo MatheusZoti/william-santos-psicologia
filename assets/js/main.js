@@ -53,14 +53,10 @@
     });
   }
 
-  // Header sólido depois do hero
+  // Header fixo e com o mesmo visual do início ao fim da página
   var header = $('.site-header');
   var hero = $('.hero');
-  if (header && hero && 'IntersectionObserver' in window) {
-    new IntersectionObserver(function (e) {
-      header.classList.toggle('is-solid', !e[0].isIntersecting);
-    }, { rootMargin: '-72px 0px 0px 0px' }).observe(hero);
-  }
+  if (header) header.classList.add('is-solid');
 
   var hasGsap = !!(window.gsap && window.ScrollTrigger && window.SplitText && window.DrawSVGPlugin);
 
@@ -353,8 +349,6 @@
       start: 0, end: 'max',
       onUpdate: function (self) {
         gsap.set(bar, { scaleX: self.progress });
-        var past = self.scroll() > window.innerHeight * 0.9;
-        header.classList.toggle('is-hidden', past && self.direction === 1);
       }
     });
   }
