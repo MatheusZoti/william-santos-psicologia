@@ -451,17 +451,20 @@
       var bits = $$('.pro__top, .pro__bio, .pro__facts > div, .pro > .pro__body > .btn', card);
       var chips = $$('.plans li', card), symbol = $('.pro__symbol', card);
       gsap.set(card, { autoAlpha: 1 });
-      gsap.set(photo, { clipPath: 'inset(0% 0% 100% 0%)' });
+      // no desktop a foto abre de lado, do centro do card para fora; no celular, de baixo para cima
+      var wide = window.matchMedia('(min-width: 901px)').matches;
+      var photoFrom = !wide ? 'inset(0% 0% 100% 0%)' : (card.classList.contains('pro--mavi') ? 'inset(0% 0% 0% 100%)' : 'inset(0% 100% 0% 0%)');
+      gsap.set(photo, { clipPath: photoFrom });
       gsap.set(img, { scale: 1.45 });
       gsap.set(bits, { autoAlpha: 0, y: 30 });
       gsap.set(chips, { autoAlpha: 0, scale: 0.6 });
       gsap.set(symbol, { autoAlpha: 0, rotate: -40, scale: 0.4 });
-      gsap.set($('.pro__body', card), { clipPath: 'inset(0% 0% 100% 0%)' });
+      gsap.set($('.pro__body', card), { clipPath: wide ? 'inset(100% 0% 0% 0%)' : 'inset(0% 0% 100% 0%)' });
 
       gsap.timeline({ delay: i * 0.12, scrollTrigger: { trigger: card, start: 'top 82%', once: true } })
         .to(photo, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.5, ease: 'wmInOut' }, 0)
         .to(img, { scale: 1.12, duration: 2.2 }, 0)
-        .to($('.pro__body', card), { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'wmInOut' }, 0.55)
+        .to($('.pro__body', card), { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.2, ease: 'wmInOut' }, wide ? 0.25 : 0.55)
         .to(bits, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.07 }, 0.8)
         .to(symbol, { autoAlpha: 0.95, rotate: 0, scale: 1, duration: 1.4, ease: 'back.out(1.8)' }, 0.9)
         .to(chips, { autoAlpha: 1, scale: 1, duration: 0.6, ease: 'back.out(2.2)', stagger: 0.035 }, 1.2);
@@ -478,7 +481,7 @@
         card.addEventListener('pointermove', function (e) {
           var r = card.getBoundingClientRect();
           var px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
-          rY((px - 0.5) * 7); rX((0.5 - py) * 5);
+          rY((px - 0.5) * 3); rX((0.5 - py) * 3);
           card.style.setProperty('--mx', (px * 100) + '%');
           card.style.setProperty('--my', (py * 100) + '%');
         });
@@ -486,11 +489,6 @@
       }
     });
 
-    // As colunas andam em ritmos diferentes no desktop
-    gsap.matchMedia().add('(min-width: 901px)', function () {
-      gsap.fromTo('.pro--mavi', { y: 70 }, { y: -50, ease: 'none', scrollTrigger: { trigger: '.pros__grid', start: 'top bottom', end: 'bottom top', scrub: true } });
-      gsap.fromTo('.pro--will', { y: 20 }, { y: -20, ease: 'none', scrollTrigger: { trigger: '.pros__grid', start: 'top bottom', end: 'bottom top', scrub: true } });
-    });
   }
 
   function firstContact() {
