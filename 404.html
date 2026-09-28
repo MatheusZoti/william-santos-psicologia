@@ -9,10 +9,22 @@
   <link rel="icon" type="image/png" sizes="48x48" href="/favicon-48.png">
   <link rel="preload" href="/assets/fonts/aleiakids.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="/assets/css/style.css">
+  <script>
+    (function (d) {
+      var h = d.documentElement;
+      h.classList.add('js');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      h.classList.add('motion');
+      setTimeout(function () { if (!window.__wmMotion) h.classList.remove('motion'); }, 4000);
+    })(document);
+  </script>
   <style>
     body { background: var(--ink); color: var(--on-dark); padding-bottom: 0; }
     .nf { position: relative; min-height: 100dvh; display: flex; align-items: center; overflow: hidden; padding: 120px 0 80px; }
-    .nf__code { font-family: var(--serif); font-size: clamp(6rem, 18vw, 13rem); line-height: .9; color: transparent; -webkit-text-stroke: 1px rgba(209,163,100,.6); margin: 0 0 24px; }
+    .nf .nf__code { font-family: var(--serif); font-size: clamp(1rem, 1.2vw, 1.125rem); letter-spacing: .3em; color: var(--gold); margin: 0 0 20px; }
+    .bridge--broken { width: min(360px, 70vw); height: auto; margin-bottom: 40px; }
+    .motion .nf .container > * { visibility: hidden; }
+    .nf .river { height: 45%; }
     .nf h1 { max-width: 16ch; }
     .nf p { margin: 24px 0 40px; max-width: 42ch; color: var(--on-dark-muted); }
     .nf__actions { display: flex; flex-wrap: wrap; gap: 14px; }
@@ -31,9 +43,17 @@
   </header>
   <main class="nf">
     <div class="glow" aria-hidden="true"></div>
+    <canvas class="river" data-river aria-hidden="true"></canvas>
     <div class="rings" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
     <div class="container">
-      <p class="nf__code" aria-hidden="true">404</p>
+      <svg class="bridge bridge--broken" viewBox="-12 -12 1024 638" fill="none" aria-hidden="true" focusable="false">
+        <g class="bridge__towers"><path d="M368,488 L368,16"/><path d="M632,488 L632,16"/></g>
+        <g class="bridge__deck"><path d="M300,364 L10,368"/><path d="M700,364 L990,368"/></g>
+        <g class="bridge__cables"><path d="M362,30 C330,180 200,340 12,362"/><path d="M638,30 C670,180 800,340 988,362"/></g>
+        <g class="bridge__hangers"><path d="M214,273 L214,364"/><path d="M284,199 L284,363"/><path d="M716,199 L716,363"/><path d="M786,273 L786,364"/></g>
+        <path class="bridge__river" d="M572,6 C500,60 440,130 438,210 C436,290 530,345 560,410 C592,480 560,560 490,610"/>
+      </svg>
+      <p class="nf__code">Erro 404</p>
       <h1 class="h-xl">Este caminho não leva a lugar nenhum.</h1>
       <p>A página que você procurou não existe ou mudou de endereço. Mas o espaço para conversar continua aqui.</p>
       <div class="nf__actions">
@@ -42,5 +62,14 @@
       </div>
     </div>
   </main>
+  <script src="/assets/js/vendor/gsap.min.js" defer></script>
+  <script src="/assets/js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="/assets/js/vendor/SplitText.min.js" defer></script>
+  <script src="/assets/js/vendor/DrawSVGPlugin.min.js" defer></script>
+  <script src="/assets/js/vendor/MotionPathPlugin.min.js" defer></script>
+  <script src="/assets/js/vendor/CustomEase.min.js" defer></script>
+  <script src="/assets/js/vendor/lenis.min.js" defer></script>
+  <script src="/assets/js/river.js" defer></script>
+  <script src="/assets/js/main.js" defer></script>
 </body>
 </html>

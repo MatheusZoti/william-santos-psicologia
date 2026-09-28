@@ -48,7 +48,16 @@
     ]
   }
   </script>
-  <script>document.documentElement.classList.add('js');</script>
+  <script>
+    (function (d) {
+      var h = d.documentElement;
+      h.classList.add('js');
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      h.classList.add('motion');
+      try { if (!location.hash && !sessionStorage.getItem('wm-intro')) h.classList.add('intro'); } catch (e) { if (!location.hash) h.classList.add('intro'); }
+      setTimeout(function () { if (!window.__wmMotion) h.classList.remove('motion', 'intro'); }, 4000);
+    })(document);
+  </script>
 </head>
 <body>
   <svg width="0" height="0" style="position:absolute" aria-hidden="true">
@@ -63,6 +72,19 @@
     <symbol id="i-home" viewBox="0 0 256 256"><path d="M240,210H222V131.17l5.76,5.76a6,6,0,0,0,8.48-8.49L137.9,30.09a14,14,0,0,0-19.8,0L19.76,128.44a6,6,0,0,0,8.48,8.49L34,131.17V210H16a6,6,0,0,0,0,12H240a6,6,0,0,0,0-12ZM46,119.17l80.58-80.59a2,2,0,0,1,2.84,0L210,119.17V210H158V152a6,6,0,0,0-6-6H104a6,6,0,0,0-6,6v58H46ZM146,210H110V158h36Z"/></symbol>
     <symbol id="i-question" viewBox="0 0 256 256"><path d="M138,180a10,10,0,1,1-10-10A10,10,0,0,1,138,180ZM128,74c-21,0-38,15.25-38,34v4a6,6,0,0,0,12,0v-4c0-12.13,11.66-22,26-22s26,9.87,26,22-11.66,22-26,22a6,6,0,0,0-6,6v8a6,6,0,0,0,12,0v-2.42c18.11-2.58,32-16.66,32-33.58C166,89.25,149,74,128,74Zm102,54A102,102,0,1,1,128,26,102.12,102.12,0,0,1,230,128Zm-12,0a90,90,0,1,0-90,90A90.1,90.1,0,0,0,218,128Z"/></symbol>
   </svg>
+
+  <div class="intro-screen" aria-hidden="true">
+    <div class="intro-screen__inner">
+      <svg class="bridge bridge--intro" viewBox="-12 -12 1024 638" fill="none" aria-hidden="true" focusable="false">
+        <g class="bridge__towers"><path d="M368,488 L368,16"/><path d="M632,488 L632,16"/></g>
+        <g class="bridge__deck"><path d="M478,362 L10,368"/><path d="M548,362 L990,368"/></g>
+        <g class="bridge__cables"><path d="M362,30 C330,180 200,340 12,362"/><path d="M638,30 C670,180 800,340 988,362"/></g>
+        <g class="bridge__hangers"><path d="M214,273 L214,364"/><path d="M284,199 L284,363"/><path d="M716,199 L716,363"/><path d="M786,273 L786,364"/></g>
+        <path class="bridge__river" d="M572,6 C500,60 440,130 438,210 C436,290 530,345 560,410 C592,480 560,560 490,610"/>
+      </svg>
+      <p class="intro-screen__word"><span class="intro-screen__wm">WM</span><span class="intro-screen__sub">Psicologia</span></p>
+    </div>
+  </div>
 
   <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
 
@@ -80,6 +102,7 @@
         <a class="btn btn--ghost-dark" href="#agendar">Agendar uma conversa</a>
       </nav>
     </div>
+    <span class="scroll-progress" aria-hidden="true"></span>
   </header>
 
   <main id="conteudo">
@@ -87,6 +110,7 @@
     <!-- 1. Hero -->
     <section class="hero" id="inicio" aria-labelledby="hero-title">
       <div class="glow" aria-hidden="true"></div>
+      <canvas class="river" data-river aria-hidden="true"></canvas>
       <div class="rings" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span></div>
       <div class="container hero__grid">
         <div>
@@ -94,12 +118,12 @@
           <h1 class="h-xl reveal" id="hero-title" style="--d:.08s">Um espaço para compreender o que você está vivendo</h1>
           <p class="hero__sub lead reveal" style="--d:.16s">e encontrar novas possibilidades para seguir. Atendimento para crianças, adolescentes e adultos.</p>
           <div class="hero__actions reveal" style="--d:.24s">
-            <a class="btn btn--gold" href="#agendar">Agendar uma conversa</a>
+            <a class="btn btn--gold" data-magnetic href="#agendar">Agendar uma conversa</a>
             <a class="text-link" href="#profissionais">Conheça os profissionais</a>
           </div>
         </div>
         <div class="hero__media reveal" style="--d:.2s">
-          <div class="arch-outline" aria-hidden="true"></div>
+          <svg class="arch-outline" aria-hidden="true" focusable="false"><path/></svg>
           <div class="arch">
             <img src="assets/img/duo-arch.webp"
                  srcset="assets/img/duo-arch-sm.webp 480w, assets/img/duo-arch.webp 770w"
@@ -114,7 +138,7 @@
     <!-- 2. Ponte de empatia -->
     <section class="section is-sand" id="sobre" aria-labelledby="empatia-title">
       <div class="container">
-        <h2 class="statement reveal" id="empatia-title">Nem sempre é fácil compreender sozinho <span>aquilo que estamos vivendo.</span></h2>
+        <h2 class="statement reveal" id="empatia-title">Nem sempre é fácil compreender sozinho <span class="soft">aquilo que estamos vivendo.</span></h2>
         <div class="empathy__body">
           <p class="reveal">Há momentos em que uma situação, uma relação, uma escolha ou uma mudança começa a ocupar espaço demais na nossa vida. Às vezes sabemos que algo não está bem, mas ainda não conseguimos compreender exatamente o quê.</p>
           <p class="reveal">A psicoterapia pode ser um espaço para parar, olhar para essa experiência com mais cuidado e construir, junto com alguém, uma compreensão mais ampla sobre o que está acontecendo.</p>
@@ -122,7 +146,8 @@
         </div>
       </div>
       <svg class="flow-line" viewBox="0 0 1440 160" preserveAspectRatio="none" aria-hidden="true">
-        <path d="M0,118 C220,60 380,150 620,104 C860,58 1000,140 1220,92 C1320,70 1390,84 1440,96"/>
+        <path class="flow-line__base" d="M0,118 C220,60 380,150 620,104 C860,58 1000,140 1220,92 C1320,70 1390,84 1440,96"/>
+        <path class="flow-line__current" d="M0,118 C220,60 380,150 620,104 C860,58 1000,140 1220,92 C1320,70 1390,84 1440,96"/>
       </svg>
     </section>
 
@@ -135,19 +160,19 @@
           <p class="lead muted-dark reveal">Talvez você esteja vivendo um momento em que...</p>
         </div>
         <ol class="when__grid">
-          <li class="reveal">Sente que está sobrecarregado e não consegue organizar o que está acontecendo.</li>
-          <li class="reveal" style="--d:.06s">Percebe dificuldades nos relacionamentos.</li>
-          <li class="reveal" style="--d:.12s">Está passando por uma mudança importante.</li>
-          <li class="reveal">Tem enfrentado ansiedade, tristeza, medo ou insegurança.</li>
-          <li class="reveal" style="--d:.06s">Sente dificuldade para tomar decisões.</li>
-          <li class="reveal" style="--d:.12s">Está vivendo conflitos familiares ou afetivos.</li>
-          <li class="reveal">Percebe que determinados padrões continuam se repetindo.</li>
-          <li class="reveal" style="--d:.06s">Está atravessando uma fase de transição e não sabe exatamente qual caminho seguir.</li>
-          <li class="reveal" style="--d:.12s">Ou simplesmente gostaria de compreender melhor a si mesmo e sua maneira de viver.</li>
+          <li class="reveal"><span class="when__bar" aria-hidden="true"></span><span class="when__text">Sente que está sobrecarregado e não consegue organizar o que está acontecendo.</span></li>
+          <li class="reveal" style="--d:.06s"><span class="when__bar" aria-hidden="true"></span><span class="when__text">Percebe dificuldades nos relacionamentos.</span></li>
+          <li class="reveal" style="--d:.12s"><span class="when__bar" aria-hidden="true"></span><span class="when__text">Está passando por uma mudança importante.</span></li>
+          <li class="reveal"><span class="when__bar" aria-hidden="true"></span><span class="when__text">Tem enfrentado ansiedade, tristeza, medo ou insegurança.</span></li>
+          <li class="reveal" style="--d:.06s"><span class="when__bar" aria-hidden="true"></span><span class="when__text">Sente dificuldade para tomar decisões.</span></li>
+          <li class="reveal" style="--d:.12s"><span class="when__bar" aria-hidden="true"></span><span class="when__text">Está vivendo conflitos familiares ou afetivos.</span></li>
+          <li class="reveal"><span class="when__bar" aria-hidden="true"></span><span class="when__text">Percebe que determinados padrões continuam se repetindo.</span></li>
+          <li class="reveal" style="--d:.06s"><span class="when__bar" aria-hidden="true"></span><span class="when__text">Está atravessando uma fase de transição e não sabe exatamente qual caminho seguir.</span></li>
+          <li class="reveal" style="--d:.12s"><span class="when__bar" aria-hidden="true"></span><span class="when__text">Ou simplesmente gostaria de compreender melhor a si mesmo e sua maneira de viver.</span></li>
         </ol>
         <div class="when__close reveal">
           <p>Você não precisa esperar chegar ao limite para procurar ajuda.</p>
-          <a class="btn btn--gold" href="#agendar">Agendar uma conversa</a>
+          <a class="btn btn--gold" data-magnetic href="#agendar">Agendar uma conversa</a>
         </div>
       </div>
     </section>
@@ -171,6 +196,7 @@
         </div>
 
         <div class="path" data-path>
+          <div class="path__rail" aria-hidden="true"><span class="path__fill"></span></div>
           <div class="path__step reveal">
             <h3>Cada história é única</h3>
             <p>Cada pessoa chega à psicoterapia com uma história, uma maneira própria de perceber o mundo e diferentes formas de lidar com aquilo que vive.</p>
@@ -197,7 +223,7 @@
         </div>
 
         <div class="pros__grid">
-          <article class="pro pro--will reveal" aria-labelledby="will-name">
+          <article class="pro pro--will reveal" data-tilt aria-labelledby="will-name">
             <div class="pro__photo">
               <img src="assets/img/willian.webp" width="512" height="640" loading="lazy" alt="Retrato do psicólogo Willian Santos">
             </div>
@@ -222,7 +248,7 @@
             </div>
           </article>
 
-          <article class="pro pro--mavi reveal" style="--d:.1s" aria-labelledby="mavi-name">
+          <article class="pro pro--mavi reveal" data-tilt style="--d:.1s" aria-labelledby="mavi-name">
             <div class="pro__photo">
               <img src="assets/img/mavi.webp" width="720" height="900" loading="lazy" alt="Retrato da psicóloga Maria Vitória Brandão">
             </div>
@@ -264,6 +290,8 @@
         <div class="steps__head">
           <h2 class="h-lg reveal" id="contato-title">Como funciona o primeiro contato</h2>
         </div>
+        <div class="steps-wrap">
+        <div class="steps__line" aria-hidden="true"><span class="steps__fill"></span><span class="steps__dot"></span></div>
         <ol class="steps">
           <li class="step reveal">
             <span class="step__num" aria-hidden="true">1</span>
@@ -281,8 +309,9 @@
             <p>Um encontro para você contar, no seu tempo, o que te trouxe até aqui. Sem pressa e sem precisar ter tudo organizado.</p>
           </li>
         </ol>
+        </div>
         <div class="steps__cta reveal">
-          <a class="btn btn--gold" href="#agendar">Agendar uma conversa</a>
+          <a class="btn btn--gold" data-magnetic href="#agendar">Agendar uma conversa</a>
         </div>
       </div>
     </section>
@@ -367,7 +396,15 @@
     <!-- 9. CTA final -->
     <section class="section is-dark final" id="agendar" aria-labelledby="final-title">
       <div class="glow glow--center" aria-hidden="true"></div>
+      <canvas class="river river--final" data-river aria-hidden="true"></canvas>
       <div class="container">
+        <svg class="bridge bridge--final" viewBox="-12 -12 1024 638" fill="none" aria-hidden="true" focusable="false">
+        <g class="bridge__towers"><path d="M368,488 L368,16"/><path d="M632,488 L632,16"/></g>
+        <g class="bridge__deck"><path d="M478,362 L10,368"/><path d="M548,362 L990,368"/></g>
+        <g class="bridge__cables"><path d="M362,30 C330,180 200,340 12,362"/><path d="M638,30 C670,180 800,340 988,362"/></g>
+        <g class="bridge__hangers"><path d="M214,273 L214,364"/><path d="M284,199 L284,363"/><path d="M716,199 L716,363"/><path d="M786,273 L786,364"/></g>
+        <path class="bridge__river" d="M572,6 C500,60 440,130 438,210 C436,290 530,345 560,410 C592,480 560,560 490,610"/>
+      </svg>
         <h2 class="h-xl reveal" id="final-title">Você não precisa ter todas as respostas antes de começar.</h2>
         <p class="final__sub lead reveal">O primeiro passo pode ser simplesmente conversar.</p>
         <div class="choices">
@@ -438,6 +475,14 @@
     </a>
   </nav>
 
+  <script src="assets/js/vendor/gsap.min.js" defer></script>
+  <script src="assets/js/vendor/ScrollTrigger.min.js" defer></script>
+  <script src="assets/js/vendor/SplitText.min.js" defer></script>
+  <script src="assets/js/vendor/DrawSVGPlugin.min.js" defer></script>
+  <script src="assets/js/vendor/MotionPathPlugin.min.js" defer></script>
+  <script src="assets/js/vendor/CustomEase.min.js" defer></script>
+  <script src="assets/js/vendor/lenis.min.js" defer></script>
+  <script src="assets/js/river.js" defer></script>
   <script src="assets/js/main.js" defer></script>
 </body>
 </html>

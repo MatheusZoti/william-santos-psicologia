@@ -178,12 +178,13 @@ button { font: inherit; }
 .hero__media { position: relative; justify-self: end; width: min(100%, 470px); }
 .arch { position: relative; border-radius: 999px 999px var(--radius-lg) var(--radius-lg); overflow: hidden; aspect-ratio: 770 / 940; background: var(--ink-800); }
 .arch img { width: 100%; height: 100%; object-fit: cover; }
-.arch-outline { position: absolute; inset: -18px -18px 36px 36px; border: 1px solid rgba(209, 163, 100, 0.45); border-radius: 999px 999px var(--radius-lg) var(--radius-lg); pointer-events: none; z-index: -1; }
+.arch-outline { position: absolute; left: 36px; top: -18px; width: calc(100% - 18px); height: calc(100% - 18px); overflow: visible; pointer-events: none; z-index: -1; }
+.arch-outline path { fill: none; stroke: rgba(209, 163, 100, 0.55); stroke-width: 1; }
 .hero .rings { left: -56px; bottom: -64px; }
 
 /* ---------- Empathy ---------- */
 .statement { font-size: clamp(2rem, 4.6vw, 3.875rem); line-height: 1.12; max-width: 20ch; }
-.statement span { color: rgba(10, 39, 45, 0.38); }
+.statement .soft { color: #84663d; }
 .empathy__body { margin: clamp(48px, 6vw, 80px) 0 0 auto; width: min(100%, 560px); color: var(--on-light-muted); }
 .empathy__body p:first-child { color: var(--on-light); font-size: 1.1875rem; }
 .flow-line { position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 160px; pointer-events: none; }
@@ -208,12 +209,13 @@ button { font: inherit; }
 .approach__lines p { margin: 0; color: var(--on-light-muted); font-size: 0.98rem; }
 .approach__lines strong { color: var(--on-light); font-weight: 600; }
 .path { position: relative; padding-left: 56px; }
-.path__step:not(:last-child)::after { content: ""; position: absolute; left: -45px; top: 32px; bottom: -8px; width: 2px; background: var(--gold); transform-origin: top; transform: scaleY(0); transition: transform 1.2s var(--ease) 0.2s; }
-.path.is-visible .path__step::after, html:not(.js) .path__step::after { transform: scaleY(1); }
+.path__rail { position: absolute; left: 11px; top: 20px; bottom: 20px; width: 2px; background: rgba(209, 163, 100, 0.22); border-radius: 2px; overflow: hidden; }
+.path__fill { position: absolute; inset: 0; background: var(--gold); transform-origin: top; }
 .path__step { position: relative; padding-bottom: clamp(40px, 5vw, 64px); }
 .path__step:last-child { padding-bottom: 0; }
-.path__step::before { content: ""; position: absolute; z-index: 1; left: -56px; top: 8px; width: 24px; height: 24px; border-radius: 50%; background: var(--sand); border: 2px solid var(--gold); }
-.path__step:last-child::before { background: var(--gold); }
+.path__step::before { content: ""; position: absolute; z-index: 1; left: -56px; top: 8px; width: 24px; height: 24px; border-radius: 50%; background: var(--gold); border: 2px solid var(--gold); box-shadow: 0 0 0 0 rgba(209, 163, 100, 0.45); transition: background-color 0.5s var(--ease), box-shadow 0.8s var(--ease); }
+.motion .path__step::before { background: var(--sand); }
+.motion .path__step.is-active::before { background: var(--gold); box-shadow: 0 0 0 8px rgba(209, 163, 100, 0.16); }
 .path__step h3 { font-size: clamp(1.5rem, 2.2vw, 2rem); margin-bottom: 14px; }
 .path__step p { color: var(--on-light-muted); margin: 0; max-width: 52ch; }
 
@@ -251,9 +253,12 @@ button { font: inherit; }
 
 /* ---------- First contact ---------- */
 .steps__head { max-width: 640px; }
-.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 64px); margin-top: clamp(56px, 7vw, 96px); position: relative; }
-.steps::before { content: ""; position: absolute; top: 34px; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, rgba(209, 163, 100, 0.6), rgba(217, 168, 160, 0.45)); }
-.step__num { position: relative; display: inline-grid; place-items: center; width: 68px; height: 68px; border-radius: 50%; background: var(--ink); border: 1px solid var(--gold); font-family: var(--serif); font-size: 1.75rem; color: var(--gold); margin-bottom: 28px; }
+.steps-wrap { position: relative; margin-top: clamp(56px, 7vw, 96px); }
+.steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(28px, 4vw, 64px); position: relative; }
+.steps__line { position: absolute; top: 34px; left: 0; right: 0; height: 1px; background: rgba(209, 163, 100, 0.18); }
+.steps__fill { position: absolute; inset: 0; background: linear-gradient(90deg, var(--gold), var(--rose)); transform-origin: left; }
+.steps__dot { position: absolute; left: 0; top: 50%; width: 11px; height: 11px; margin: -5.5px 0 0 -5.5px; border-radius: 50%; background: var(--gold-50); box-shadow: 0 0 0 4px rgba(209, 163, 100, 0.25), 0 0 24px 6px rgba(238, 186, 115, 0.55); opacity: 0; }
+.step__num { position: relative; z-index: 1; display: inline-grid; place-items: center; width: 68px; height: 68px; border-radius: 50%; background: var(--ink); border: 1px solid var(--gold); font-family: var(--serif); font-size: 1.75rem; color: var(--gold); margin-bottom: 28px; }
 .step h3 { font-size: clamp(1.375rem, 2vw, 1.75rem); margin-bottom: 12px; }
 .step p { color: var(--on-dark-muted); margin: 0; max-width: 34ch; }
 .steps__cta { margin-top: clamp(48px, 6vw, 72px); }
@@ -282,7 +287,9 @@ button { font: inherit; }
 .faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; align-items: center; gap: 24px; padding: 24px 0; font-size: 1.125rem; font-weight: 500; }
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary .icon { width: 22px; height: 22px; color: var(--gold); transition: transform 0.4s var(--ease); }
-.faq details[open] summary .icon { transform: rotate(45deg); }
+.faq details[open] summary .icon, .faq details.is-open summary .icon { transform: rotate(45deg); }
+.motion .faq details[open]:not(.is-open) summary .icon { transform: none; }
+.faq__answer { overflow: hidden; }
 .faq summary:hover { color: var(--ink-700); }
 .faq__answer { padding: 0 48px 26px 0; color: var(--on-light-muted); }
 .faq__answer p { margin: 0; }
@@ -314,12 +321,6 @@ button { font: inherit; }
 /* ---------- Mobile sticky WhatsApp bar ---------- */
 .mobile-bar { display: none; }
 
-/* ---------- Reveal ---------- */
-@media (prefers-reduced-motion: no-preference) {
-  .js .reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); transition-delay: var(--d, 0s); }
-  .js .reveal.is-visible { opacity: 1; transform: none; }
-  .js .hero .reveal { transition-duration: 1.2s; }
-}
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
@@ -343,7 +344,9 @@ button { font: inherit; }
   .pros__grid { grid-template-columns: 1fr; max-width: 560px; margin: 0 auto; }
   .pro--mavi { margin-top: 0; }
   .steps { grid-template-columns: 1fr; gap: 40px; }
-  .steps::before { top: 0; bottom: 0; left: 34px; right: auto; width: 1px; height: auto; background: linear-gradient(180deg, rgba(209, 163, 100, 0.6), rgba(217, 168, 160, 0.45)); }
+  .steps__line { top: 0; bottom: 0; left: 34px; right: auto; width: 1px; height: auto; }
+  .steps__fill { background: linear-gradient(180deg, var(--gold), var(--rose)); transform-origin: top; }
+  .steps__dot { left: 50%; top: 0; }
   .step { display: grid; grid-template-columns: 68px 1fr; gap: 0 22px; }
   .step__num { margin-bottom: 0; grid-row: span 2; }
   .choices { grid-template-columns: 1fr; }
@@ -373,4 +376,118 @@ button { font: inherit; }
     box-shadow: 0 -1px 0 var(--on-dark-faint);
   }
   .mobile-bar .btn { min-height: 48px; padding: 0 12px; font-size: 0.9375rem; gap: 8px; }
+}
+
+
+/* =========================================================
+   MOTION
+   ========================================================= */
+
+/* Estados iniciais: só escondidos quando o motion está ativo.
+   Se o script falhar, o head remove .motion em 4s e tudo aparece. */
+.motion .reveal { visibility: hidden; }
+.motion .site-header .brand, .motion .nav > * { visibility: hidden; }
+
+/* ---------- Ponte (traço) ---------- */
+.bridge { display: block; overflow: visible; }
+.bridge path { fill: none; stroke: var(--gold); stroke-linecap: round; stroke-linejoin: round; }
+.bridge__towers path { stroke-width: 26; }
+.bridge__deck path { stroke-width: 16; }
+.bridge__cables path { stroke-width: 13; }
+.bridge__hangers path { stroke-width: 10; }
+.bridge__river { stroke-width: 22; stroke: var(--gold-200) !important; }
+
+/* ---------- Tela de abertura ---------- */
+.intro-screen { display: none; }
+.motion.intro .intro-screen {
+  display: grid; place-items: center; position: fixed; inset: 0; z-index: 200;
+  background: var(--ink-950); color: var(--on-dark);
+  clip-path: inset(0 0 0 0);
+}
+.intro-screen::before {
+  content: ""; position: absolute; inset: 0;
+  background: radial-gradient(60% 50% at 50% 55%, rgba(209, 163, 100, 0.16), transparent 70%);
+}
+.intro-screen__inner { position: relative; display: grid; justify-items: center; gap: 28px; }
+.bridge--intro { width: min(300px, 62vw); height: auto; }
+.intro-screen__word { margin: 0; display: grid; justify-items: center; line-height: 1; }
+.intro-screen__wm { font-family: var(--serif); font-size: 3rem; color: var(--gold); letter-spacing: 0.04em; }
+.intro-screen__sub { margin-top: 10px; font-size: 0.75rem; letter-spacing: 0.5em; text-transform: uppercase; padding-left: 0.5em; }
+.motion.intro body { overflow: hidden; }
+
+/* ---------- Rio ---------- */
+.river {
+  position: absolute; left: 0; right: 0; bottom: 0; width: 100%; height: 48%;
+  pointer-events: none; z-index: 0;
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 42%, #000 82%, transparent 100%);
+          mask-image: linear-gradient(to bottom, transparent 0%, #000 42%, #000 82%, transparent 100%);
+}
+.river--final { height: 62%; }
+.hero .glow { z-index: 0; }
+
+/* ---------- Header: progresso e esconder ao rolar ---------- */
+.site-header { transition: background-color 0.4s var(--ease), box-shadow 0.4s var(--ease), transform 0.6s var(--ease); }
+.site-header.is-hidden { transform: translateY(-100%); }
+.scroll-progress { position: absolute; left: 0; bottom: 0; width: 100%; height: 1px; background: linear-gradient(90deg, var(--gold), var(--rose)); transform-origin: left; transform: scaleX(0); opacity: 0; transition: opacity 0.4s; }
+.site-header.is-solid .scroll-progress { opacity: 1; }
+
+/* ---------- Texto dividido ---------- */
+.split-line { padding-bottom: 0.06em; margin-bottom: -0.06em; }
+.hero h1 .split-line, .final .split-line { padding-bottom: 0.12em; margin-bottom: -0.12em; }
+
+/* ---------- Linha que corre (empatia) ---------- */
+.flow-line .flow-line__current { stroke: var(--gold-200); stroke-width: 2; opacity: 0.9; stroke-dasharray: 46 460; }
+
+/* ---------- Quando procurar: linha que acende ---------- */
+.when__grid li { position: relative; transition: color 0.4s var(--ease); }
+.when__grid li .when__bar { position: absolute; left: 0; top: -1px; height: 1px; width: 100%; background: var(--gold); transform-origin: left; transform: scaleX(0); transition: transform 0.9s var(--ease); }
+.when__grid li:hover .when__bar { transform: scaleX(1); }
+.when__grid li > .when__text { display: block; transition: transform 0.6s var(--ease); }
+.when__grid li:hover > .when__text { transform: translateX(6px); }
+
+/* ---------- Cards dos profissionais: inclinação e brilho ---------- */
+.pros__grid { perspective: 1400px; }
+.pro { position: relative; transform-style: preserve-3d; will-change: transform; }
+.pro::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2;
+  background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 244, 228, 0.16), transparent 60%);
+  opacity: 0; transition: opacity 0.5s var(--ease);
+}
+.pro:hover::after { opacity: 1; }
+.pro--mavi::after { background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 30%), rgba(255, 255, 255, 0.35), transparent 60%); }
+.pro__photo { position: relative; }
+.pro__photo img { transform-origin: 50% 40%; }
+.pro:hover .pro__photo img { transform: none; }
+
+/* ---------- Convite final: ponte e spotlight ---------- */
+.bridge--final { width: 128px; height: auto; margin: 0 auto 36px; }
+.choice { position: relative; overflow: hidden; }
+.choice::before {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), rgba(209, 163, 100, 0.18), transparent 65%);
+  opacity: 0; transition: opacity 0.5s var(--ease);
+}
+.choice:hover::before { opacity: 1; }
+.choice > * { position: relative; }
+
+/* ---------- Botões: brilho que atravessa ---------- */
+.btn { position: relative; overflow: hidden; isolation: isolate; }
+.btn--gold::after, .btn--rose::after, .btn--ink::after {
+  content: ""; position: absolute; top: 0; bottom: 0; left: -60%; width: 40%; z-index: -1;
+  background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.45), transparent);
+  transform: skewX(-18deg) translateX(0); transition: transform 0s;
+}
+.btn--gold:hover::after, .btn--rose:hover::after, .btn--ink:hover::after { transform: skewX(-18deg) translateX(420%); transition: transform 0.9s var(--ease); }
+.btn .icon { transition: transform 0.5s var(--ease); }
+.btn:hover .icon { transform: rotate(-10deg) scale(1.1); }
+
+/* ---------- Mapa (pino) ---------- */
+.address .icon { transform-origin: 50% 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .river { display: none; }
+  .btn::after { display: none; }
+}
+@media (max-width: 900px) {
+  .river { height: 38%; }
 }

@@ -12,7 +12,9 @@ Site estático (HTML, CSS e JavaScript puro) da WM Psicologia, de Willian Santos
 
 ```
 assets/css/style.css   estilos compartilhados
-assets/js/main.js      animações de entrada, header e FAQ
+assets/js/main.js      coreografia de motion (GSAP), header e FAQ
+assets/js/river.js     o "rio" animado em canvas
+assets/js/vendor/      GSAP 3.15 (licença padrão gratuita) e Lenis, auto-hospedados
 assets/img/            fotos otimizadas (WebP) e símbolos das marcas
 assets/fonts/          Aleiakids (títulos) e Inter (textos), auto-hospedadas
 .htaccess              página 404, cache e compressão (Hostinger)
@@ -33,3 +35,7 @@ Os links de WhatsApp aparecem em `index.html` e `links/index.html`:
 - Maria Vitória: `https://wa.me/5544991788720`
 
 O domínio usado em canonical, Open Graph, `robots.txt` e `sitemap.xml` é `wmpsicologia.com.br`.
+
+## Motion
+
+A abertura com a ponte aparece uma vez por sessão (clique ou tecla acelera). Quem ativa "reduzir movimento" no sistema vê o site completo, sem animações.
