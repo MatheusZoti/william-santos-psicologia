@@ -99,14 +99,27 @@
   }
 
   function headerOffset() { return header ? -(header.offsetHeight + 8) : 0; }
+  // Destino da rolagem. Para o convite final (#agendar) a seção cobre a tela inteira:
+  // desce até os botões de agendamento ficarem visíveis, sem passar do título.
+  function scrollDest(id, target) {
+    if (id === '#inicio') return { to: target, offset: 0 };
+    if (id !== '#agendar') return { to: target, offset: headerOffset() };
+    var top = target.getBoundingClientRect().top + window.scrollY;
+    var choices = target.querySelector('.choices'), title = target.querySelector('h2');
+    var rel = function (el) { var y = 0; while (el && el !== target) { y += el.offsetTop; el = el.offsetParent; } return y; };
+    var need = choices ? rel(choices) + choices.offsetHeight + 32 - window.innerHeight : 0;
+    var cap = title ? rel(title) - 24 : 0;
+    return { to: Math.round(top + Math.max(0, Math.min(need, cap))), offset: 0 };
+  }
   $$('a[href^="#"]:not(.skip-link)').forEach(function (a) {
     a.addEventListener('click', function (e) {
       var id = a.getAttribute('href');
       var target = id.length > 1 && document.getElementById(id.slice(1));
       if (!target || !lenis) return;
       e.preventDefault();
-      lenis.scrollTo(target, {
-        offset: id === '#inicio' ? 0 : headerOffset(),
+      var dest = scrollDest(id, target);
+      lenis.scrollTo(dest.to, {
+        offset: dest.offset,
         duration: 1.6,
         easing: function (t) { return t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2; }
       });
@@ -271,7 +284,7 @@
       gsap.delayedCall(0.1, function () { heroTl.play(); });
       if (location.hash && lenis) {
         var t = document.getElementById(location.hash.slice(1));
-        if (t) setTimeout(function () { lenis.scrollTo(t, { offset: headerOffset(), immediate: true }); ScrollTrigger.refresh(); }, 60);
+        if (t) setTimeout(function () { var d = scrollDest(location.hash, t); lenis.scrollTo(d.to, { offset: d.offset, immediate: true }); ScrollTrigger.refresh(); }, 60);
       }
     }
 
