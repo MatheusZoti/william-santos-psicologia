@@ -4,6 +4,9 @@ DirectoryIndex index.html
 ErrorDocument 404 /404.html
 Options -Indexes
 
+# Endereço provisório da landing (usado antes do lançamento) leva para a home
+RedirectMatch 301 ^/site(/.*)?$ /
+
 # Não expor arquivos do repositório
 RedirectMatch 404 /\.git
 <FilesMatch "^(README\.md|\.gitignore)$">

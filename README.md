@@ -4,18 +4,10 @@ Site estático (HTML, CSS e JavaScript puro) da WM Psicologia, de Willian Santos
 
 ## Páginas
 
-- `index.html`: página provisória "Em breve" (home do domínio por enquanto)
-- `site/index.html`: landing page com 9 seções, acessível em `/site/` enquanto o site não é lançado
+- `index.html`: landing page com 9 seções
 - `links/index.html`: página de links (biolink), acessível em `/links/`
 - `links/willian/` e `links/mavi/`: páginas de links individuais de cada profissional
 - `404.html`: página de erro, ativada pelo `.htaccess`
-
-## Lançamento (tirar o "Em breve")
-
-1. Substituir o `index.html` da raiz pelo `site/index.html`, trocando `../assets/`, `../favicon-48.png` e `../apple-touch-icon.png` por `assets/`, `favicon-48.png` e `apple-touch-icon.png`.
-2. Remover o `<meta name="robots" content="noindex">` da landing.
-3. Nas páginas de links, trocar `site/` por `` (ex.: `../site/#duvidas` vira `../#duvidas`, `../../site/` vira `../../`) e, na 404, `/site/#agendar` vira `/#agendar`.
-4. Apagar a pasta `site/`.
 
 ## Estrutura
 
@@ -38,7 +30,7 @@ Os caminhos usam `/` a partir da raiz do domínio, então o site precisa ficar n
 
 ## Editar contatos
 
-Os links de WhatsApp aparecem em `index.html` (Em breve), `site/index.html`, `links/index.html` e nas páginas individuais em `links/willian/` e `links/mavi/`:
+Os links de WhatsApp aparecem em `index.html`, `links/index.html` e nas páginas individuais em `links/willian/` e `links/mavi/`:
 
 - Willian: `https://wa.me/5544998460313`
 - Maria Vitória: `https://wa.me/5544991788720`
