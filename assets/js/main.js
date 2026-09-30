@@ -305,19 +305,17 @@
   }
 
   function buildHero() {
-    var eyebrow = $('.hero .eyebrow'), h1 = $('.hero h1'), sub = $('.hero__sub'), actions = $('.hero__actions');
+    var h1 = $('.hero h1'), sub = $('.hero__sub'), actions = $('.hero__actions');
     var media = $('.hero__media'), arch = $('.arch'), img = $('.arch img'), path = $('.arch-outline path');
     var rings = $$('.hero .rings span'), glow = $('.hero .glow'), canvas = $('.hero .river');
     var river = rivers.get(canvas);
     var headerBits = [$('.site-header .brand')].concat($$('.nav > *'));
     var bar = null;
-    claim([eyebrow, h1, sub, actions, media]);
+    claim([h1, sub, actions, media]);
 
-    var eyeSplit = SplitText.create(eyebrow, { type: 'chars' });
     var h1Split = SplitText.create(h1, { type: 'lines,words', mask: 'lines', linesClass: 'split-line' });
     var subSplit = SplitText.create(sub, { type: 'lines', mask: 'lines', linesClass: 'split-line' });
 
-    gsap.set(eyeSplit.chars, { autoAlpha: 0, y: 10 });
     gsap.set(h1Split.words, { yPercent: 118, rotate: 4 });
     gsap.set(subSplit.lines, { yPercent: 105 });
     gsap.set(actions.children, { autoAlpha: 0, y: 26 });
@@ -329,12 +327,12 @@
     gsap.set(canvas, { autoAlpha: 0 });
     gsap.set(headerBits, { autoAlpha: 0, y: -14 });
     if (bar) gsap.set(bar, { yPercent: 120 });
-    gsap.set([eyebrow, h1, sub, actions, media], { autoAlpha: 1 });
+    gsap.set([h1, sub, actions, media], { autoAlpha: 1 });
 
     var tl = gsap.timeline({
       paused: true,
       onComplete: function () {
-        h1Split.revert(); subSplit.revert(); eyeSplit.revert();
+        h1Split.revert(); subSplit.revert();
         gsap.set(path, { clearProps: 'all' });
       }
     });
@@ -343,7 +341,6 @@
       .to(arch, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.6, ease: 'wmInOut' }, 0.05)
       .to(img, { scale: 1, duration: 2.4 }, 0.05)
       .to(path, { drawSVG: '100%', duration: 2.2, ease: 'power2.inOut' }, 0.7)
-      .to(eyeSplit.chars, { autoAlpha: 1, y: 0, duration: 0.7, stagger: 0.016 }, 0.3)
       .to(h1Split.words, { yPercent: 0, rotate: 0, duration: 1.35, stagger: 0.06 }, 0.38)
       .to(subSplit.lines, { yPercent: 0, duration: 1.1, stagger: 0.09 }, 0.85)
       .to(actions.children, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.1 }, 1.05)
