@@ -366,6 +366,7 @@ main section[id] { scroll-margin-top: calc(-1 * (var(--header-h) + 16px)); }
   body { font-size: 1rem; }
   .nav .btn { min-height: 38px; padding: 0 14px; font-size: 0.8125rem; }
   .hero__actions .btn { width: 100%; }
+  .hero__actions .text-link { display: none; } /* hero mais direto no celular: só o agendamento */
   .when__grid { grid-template-columns: 1fr; }
   .when__grid li { padding: 20px 0 24px; }
   .empathy__body { margin-top: 40px; }
