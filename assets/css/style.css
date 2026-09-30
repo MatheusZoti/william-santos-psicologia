@@ -300,8 +300,8 @@ button { font: inherit; }
 
 /* ---------- Final CTA ---------- */
 .final { text-align: center; }
-/* âncora #agendar: a seção cobre a tela (sem o respiro do topo usado nas outras seções) */
-#agendar { scroll-margin-top: calc(-1 * (var(--header-h) + 16px)); }
+/* âncoras das seções: param no topo exato da seção, cobrindo a tela com a cor dela */
+main section[id] { scroll-margin-top: calc(-1 * (var(--header-h) + 16px)); }
 .final .h-xl { max-width: 18ch; margin: 0 auto; }
 .final__sub { margin: 24px auto 0; color: var(--on-dark-muted); }
 .choices { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 880px; margin: clamp(48px, 6vw, 72px) auto 0; text-align: left; }

@@ -98,12 +98,11 @@
     gsap.ticker.lagSmoothing(0);
   }
 
-  function headerOffset() { return header ? -(header.offsetHeight + 8) : 0; }
-  // Destino da rolagem. Para o convite final (#agendar) a seção cobre a tela inteira:
-  // desce até os botões de agendamento ficarem visíveis, sem passar do título.
+  // Destino da rolagem: cada seção para exatamente no topo da tela, cobrindo-a com a sua cor
+  // (o topo some ao descer e fica sobre o respiro interno da seção ao subir).
+  // No convite final (#agendar) desce até os botões de agendamento ficarem visíveis, sem passar do título.
   function scrollDest(id, target) {
-    if (id === '#inicio') return { to: target, offset: 0 };
-    if (id !== '#agendar') return { to: target, offset: headerOffset() };
+    if (id !== '#agendar') return { to: target, offset: 0 };
     var top = target.getBoundingClientRect().top + window.scrollY;
     var choices = target.querySelector('.choices'), title = target.querySelector('h2');
     var rel = function (el) { var y = 0; while (el && el !== target) { y += el.offsetTop; el = el.offsetParent; } return y; };
