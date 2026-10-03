@@ -66,7 +66,7 @@
 }
 
 *, *::before, *::after { box-sizing: border-box; }
-html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+html { overflow-y: auto; scrollbar-gutter: stable; /* reserva o espaço da barra: a página não pula quando a abertura libera a rolagem */ -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
 body {
   margin: 0;
   font-family: var(--sans);
@@ -412,7 +412,7 @@ main section[id] { scroll-margin-top: calc(-1 * (var(--header-h) + 16px)); }
 .intro-screen__word { margin: 0; display: grid; justify-items: center; line-height: 1; }
 .intro-screen__wm { font-family: var(--serif); font-size: 3rem; color: var(--gold); letter-spacing: 0.04em; }
 .intro-screen__sub { margin-top: 10px; font-size: 0.75rem; letter-spacing: 0.5em; text-transform: uppercase; padding-left: 0.5em; }
-.motion.intro body { overflow: hidden; }
+html.motion.intro { overflow: hidden; } /* trava a rolagem durante a abertura, mantendo o espaço da barra */
 
 /* ---------- Rio ---------- */
 .river {
