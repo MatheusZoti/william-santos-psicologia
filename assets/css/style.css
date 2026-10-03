@@ -67,6 +67,11 @@
 
 *, *::before, *::after { box-sizing: border-box; }
 html { overflow-y: auto; scrollbar-gutter: stable; /* reserva o espaço da barra: a página não pula quando a abertura libera a rolagem */ -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: calc(var(--header-h) + 16px); }
+/* barra de rolagem da marca: trilho no tom da abertura, indicador dourado */
+html { background: var(--ink-950); scrollbar-color: rgba(209, 163, 100, 0.55) var(--ink-950); }
+html::-webkit-scrollbar { width: 12px; background: var(--ink-950); }
+html::-webkit-scrollbar-thumb { background: rgba(209, 163, 100, 0.55); border-radius: 999px; border: 3px solid var(--ink-950); }
+html::-webkit-scrollbar-thumb:hover { background: var(--gold); }
 body {
   margin: 0;
   font-family: var(--sans);
