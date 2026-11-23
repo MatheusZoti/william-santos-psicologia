@@ -165,7 +165,8 @@
   }
 
   function riseIn(els, o) {
-    els = (els.length !== undefined ? Array.prototype.slice.call(els) : [els]).filter(Boolean);
+    if (!els) return;
+    els =(els.length !== undefined ? Array.prototype.slice.call(els) : [els]).filter(Boolean);
     if (!els.length) return;
     o = o || {};
     claim(els);
@@ -234,6 +235,7 @@
 
   fontsReady.then(function () {
     if (hero) initHome();
+    if ($('.mhero')) initOffer();
     if ($('.bio')) initLinks();
     if ($('.nf')) init404();
 
@@ -642,6 +644,133 @@
       autoAlpha: 1, y: 0, duration: 1, stagger: 0.1,
       scrollTrigger: { trigger: '.site-footer', start: 'top 92%', once: true }
     });
+  }
+
+  /* ===============================================================
+     Página da Maria Vitória (/mavi/)
+     Mesma coreografia da landing, com a linha contínua e o lótus
+     da marca dela no lugar da ponte.
+     =============================================================== */
+  function initOffer() {
+    var mhero = $('.mhero');
+    var h1 = $('.mhero h1'), eyebrow = $('.mhero .eyebrow'), sub = $('.mhero__sub');
+    var chips = $$('.mhero__chips li'), actions = $('.mhero__actions');
+    var media = $('.mhero__media'), arch = $('.mhero .arch'), img = $('.mhero .arch img'), path = $('.mhero .arch-outline path');
+    var lotus = $('.mhero__lotus'), glow = $('.mhero .glow'), line = $('.mhero .mline path');
+    var canvas = $('.mhero .river'), river = rivers.get(canvas);
+    var headerBits = [$('.site-header .brand')].concat($$('.nav > *'));
+    claim([eyebrow, h1, sub, $('.mhero__chips'), actions, media]);
+
+    var h1Split = SplitText.create(h1, { type: 'lines,words', mask: 'lines', linesClass: 'split-line' });
+    var subSplit = SplitText.create(sub, { type: 'lines', mask: 'lines', linesClass: 'split-line' });
+    gsap.set(h1Split.words, { yPercent: 118, rotate: 4 });
+    gsap.set(subSplit.lines, { yPercent: 105 });
+    gsap.set(eyebrow, { autoAlpha: 0, y: 14 });
+    gsap.set(chips, { autoAlpha: 0, scale: 0.7 });
+    gsap.set(actions.children, { autoAlpha: 0, y: 26 });
+    gsap.set(arch, { clipPath: 'inset(100% 0% 0% 0%)' });
+    gsap.set(img, { scale: 1.35 });
+    gsap.set(path, { drawSVG: '0%' });
+    gsap.set(line, { drawSVG: '0%' });
+    gsap.set(lotus, { autoAlpha: 0, y: 30, rotate: -12, scale: 0.7 });
+    gsap.set(glow, { autoAlpha: 0, scale: 0.7 });
+    gsap.set(canvas, { autoAlpha: 0 });
+    gsap.set(headerBits, { autoAlpha: 0, y: -14 });
+    gsap.set([h1, sub, $('.mhero__chips'), actions, media], { autoAlpha: 1 });
+    if (river) river.intensity = 0;
+
+    var tl = gsap.timeline({
+      delay: 0.1,
+      onComplete: function () {
+        h1Split.revert(); subSplit.revert();
+        gsap.set(path, { clearProps: 'all' });
+      }
+    });
+    tl.to(glow, { autoAlpha: 1, scale: 1, duration: 2.6 }, 0)
+      .to(canvas, { autoAlpha: 1, duration: 2 }, 0.2)
+      .to(line, { drawSVG: '100%', duration: 3, ease: 'power2.inOut' }, 0.1)
+      .to(arch, { clipPath: 'inset(0% 0% 0% 0%)', duration: 1.6, ease: 'wmInOut' }, 0.05)
+      .to(img, { scale: 1, duration: 2.4 }, 0.05)
+      .to(path, { drawSVG: '100%', duration: 2.2, ease: 'power2.inOut' }, 0.7)
+      .to(eyebrow, { autoAlpha: 1, y: 0, duration: 1 }, 0.3)
+      .to(h1Split.words, { yPercent: 0, rotate: 0, duration: 1.35, stagger: 0.06 }, 0.38)
+      .to(subSplit.lines, { yPercent: 0, duration: 1.1, stagger: 0.09 }, 0.8)
+      .to(chips, { autoAlpha: 1, scale: 1, duration: 0.7, ease: 'back.out(2.2)', stagger: 0.06 }, 1.05)
+      .to(actions.children, { autoAlpha: 1, y: 0, duration: 1, stagger: 0.1 }, 1.25)
+      .to(lotus, { autoAlpha: 1, y: 0, rotate: 0, scale: 1, duration: 1.4, ease: 'back.out(1.6)' }, 1.1)
+      .to(headerBits, { autoAlpha: 1, y: 0, duration: 0.9, stagger: 0.05 }, 0.5);
+    if (river) tl.to(river, { intensity: 1, duration: 3, ease: 'power2.out' }, 0.1);
+
+    if (fine) {
+      var gx = gsap.quickTo(glow, 'x', { duration: 1.6, ease: 'power3' });
+      var gy = gsap.quickTo(glow, 'y', { duration: 1.6, ease: 'power3' });
+      var rx = gsap.quickTo(media, 'rotationY', { duration: 1.2, ease: 'power3' });
+      var ry = gsap.quickTo(media, 'rotationX', { duration: 1.2, ease: 'power3' });
+      gsap.set(media, { transformPerspective: 1200 });
+      mhero.addEventListener('pointermove', function (e) {
+        var nx = e.clientX / window.innerWidth - 0.5, ny = e.clientY / window.innerHeight - 0.5;
+        gx(nx * 120); gy(ny * 80); rx(nx * 7); ry(-ny * 5);
+      });
+      mhero.addEventListener('pointerleave', function () { rx(0); ry(0); });
+    }
+    var st = { trigger: mhero, start: 'top top', end: 'bottom top', scrub: true };
+    gsap.to('.mhero__text', { yPercent: -14, opacity: 0.2, ease: 'none', scrollTrigger: st });
+    gsap.to('.mhero .arch', { yPercent: 8, ease: 'none', scrollTrigger: st });
+
+    // Para quem: títulos e cards
+    riseIn($('.who__head .eyebrow'), { y: 16 });
+    headingReveal($('#para-quem-title'), { delay: 0.05 });
+    riseIn($('.who__head .lead'), { delay: 0.25 });
+    var cards = $$('.who');
+    claim(cards);
+    gsap.fromTo(cards, { autoAlpha: 0, y: 60, rotationX: -10, transformPerspective: 900 }, {
+      autoAlpha: 1, y: 0, rotationX: 0, duration: 1.3, stagger: 0.12,
+      scrollTrigger: { trigger: '.who__grid', start: 'top 86%', once: true },
+      onComplete: function () { gsap.set(cards, { clearProps: 'transform' }); }
+    });
+
+    // Convênios: cada plano entra como um selo
+    riseIn($('.plans__intro .eyebrow'), { y: 16 });
+    headingReveal($('#convenios-title'));
+    linesReveal($('.plans__intro > p'), { delay: 0.1 });
+    riseIn($('.plans__intro .btn'), { delay: 0.3 });
+    var list = $('.plan-list'), plans = $$('.plan-list li');
+    claim(list);
+    gsap.set(list, { autoAlpha: 1 });
+    gsap.timeline({ scrollTrigger: { trigger: list, start: 'top 84%', once: true } })
+      .fromTo(list, { clipPath: 'inset(0% 0% 100% 0% round 28px)' }, { clipPath: 'inset(0% 0% 0% 0% round 28px)', duration: 1.2, ease: 'wmInOut' })
+      .fromTo(plans, { autoAlpha: 0, scale: 0.8, y: 14 }, { autoAlpha: 1, scale: 1, y: 0, duration: 0.7, ease: 'back.out(2)', stagger: 0.045 }, 0.45)
+      .fromTo($$('.plan-list .icon'), { scale: 0, rotate: -45 }, { scale: 1, rotate: 0, duration: 0.6, ease: 'back.out(3)', stagger: 0.045 }, 0.65);
+
+    headerScroll();
+    whenSection();
+    approach();
+    firstContact();
+    place();
+    faqSection();
+    footer();
+
+    // Convite final: a linha se desenha conforme você chega, o lótus abre
+    var fsec = $('#agendar'), fline = $('.mfinal .mline path'), flotus = $('.mfinal__lotus');
+    var fcanvas = $('.mfinal .river'), friver = rivers.get(fcanvas);
+    gsap.fromTo(fline, { drawSVG: '0%' }, { drawSVG: '100%', ease: 'none', scrollTrigger: { trigger: fsec, start: 'top 85%', end: 'center 50%', scrub: 0.8 } });
+    gsap.fromTo(flotus, { autoAlpha: 0, scale: 0.4, rotate: -30 }, { autoAlpha: 1, scale: 1, rotate: 0, duration: 1.4, ease: 'back.out(1.8)', scrollTrigger: { trigger: fsec, start: 'top 75%', once: true } });
+    headingReveal($('#final-title'), { start: 'top 80%', stagger: 0.05 });
+    riseIn($('.mfinal__sub'), { delay: 0.35, start: 'top 85%' });
+    riseIn($('.mfinal__card'), { y: 60, delay: 0.2, start: 'top 90%' });
+    spotlight($('.mfinal__card'));
+    if (friver) {
+      friver.intensity = 0;
+      gsap.to(friver, { intensity: 1, duration: 3, ease: 'power2.out', scrollTrigger: { trigger: fsec, start: 'top 70%', once: true } });
+    }
+
+    $$('[data-magnetic], .nav .btn, .place__actions .btn, .mfinal__card .btn').forEach(function (b) { magnetic(b, 0.25); });
+    $$('.btn--aura').forEach(auraHover);
+
+    if (location.hash && lenis) {
+      var t = document.getElementById(location.hash.slice(1));
+      if (t) setTimeout(function () { var d = scrollDest(location.hash, t); lenis.scrollTo(d.to, { offset: d.offset, immediate: true }); ScrollTrigger.refresh(); }, 60);
+    }
   }
 
   /* ===============================================================
