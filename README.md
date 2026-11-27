@@ -8,6 +8,7 @@ Site estático (HTML, CSS e JavaScript puro) da WM Psicologia, de Willian Santos
 - `links/index.html`: página de links (biolink), acessível em `/links/`
 - `links/willian/` e `links/mavi/`: páginas de links individuais de cada profissional
 - `mavi/index.html`: página da oferta da Maria Vitória (crianças, adolescentes, adultos e convênios), destino dos grupos 3 e 4 do Google Ads. Usa `assets/css/mavi.css` por cima do `style.css`
+- `privacidade/index.html`: Política de Privacidade (Google Ads, WhatsApp, sigilo), linkada no rodapé de todas as páginas
 - `404.html`: página de erro, ativada pelo `.htaccess`
 
 ## Estrutura

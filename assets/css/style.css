@@ -594,3 +594,10 @@ html.motion.intro { overflow: hidden; } /* trava a rolagem durante a abertura, m
 }
 
 .choice__head img[src*="willian"] { object-position: 50% 30%; }
+
+/* Link da Política de Privacidade (rodapés e páginas de links) */
+.footer__sep { margin: 0 6px; opacity: 0.5; }
+.site-footer a.footer__legal { text-decoration: underline; text-decoration-color: var(--on-dark-faint); text-underline-offset: 3px; }
+.site-footer a.footer__legal:hover { text-decoration-color: currentColor; }
+.bio__legal { color: inherit; text-underline-offset: 3px; opacity: 0.85; }
+.bio__legal:hover { opacity: 1; }
